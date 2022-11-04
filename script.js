@@ -6,7 +6,6 @@ let userScore = 0,
 function getComputerChoice() {
   let random = Math.floor(Math.random() * rockPaperScissors.length);
   let computerChoice = rockPaperScissors[random];
-  console.log("Comp pick: ", computerChoice);
   return computerChoice;
 }
 
@@ -18,42 +17,51 @@ function getComputerChoice() {
 
 // play a single round of rock paper scissors
 function playRound(playerSelection, computerSelection) {
+  console.log(
+    "[User pick]:",
+    playerSelection,
+    " [Comp pick]:",
+    computerSelection
+  );
+
   //   let playerSelection = playerSelection.toLowerCase();
   if (playerSelection == "rock") {
     if (computerSelection == "rock") {
-      return "Draw, you both picked Rock!";
+      message.textContent = "Draw, you both picked Rock!";
     } else if (computerSelection == "paper") {
-      compScore++;
-      return "You Lose... Paper beats Rock";
+      cScore.textContent = ++compScore;
+      message.textContent = "You Lose... Paper beats Rock";
     } else {
-      userScore++;
-      return "You Win! Rock beats Scissors!";
+      pScore.textContent = ++userScore;
+      message.textContent = "You Win! Rock beats Scissors!";
     }
   }
 
   if (playerSelection == "paper") {
     if (computerSelection == "rock") {
-      userScore++;
-      return "You Win! Paper beats Rock!";
+      pScore.textContent = ++userScore;
+      message.textContent = "You Win! Paper beats Rock!";
     } else if (computerSelection == "paper") {
-      return "Draw, you both picked Paper!";
+      message.textContent = "Draw, you both picked Paper!";
     } else {
-      compScore++;
-      return "You Lose... Scissors beats Paper";
+      cScore.textContent = ++compScore;
+      message.textContent = "You Lose... Scissors beats Paper";
     }
   }
 
   if (playerSelection == "scissors") {
     if (computerSelection == "rock") {
-      compScore++;
-      return "You Lose... Rock beats Scissors";
+      cScore.textContent = ++compScore;
+      message.textContent = "You Lose... Rock beats Scissors";
     } else if (computerSelection == "paper") {
-      userScore++;
-      return "You Win! Scissors beat Paper";
+      pScore.textContent = ++userScore;
+      message.textContent = "You Win! Scissors beat Paper";
     } else {
-      return "Draw, you both picked Scissors!";
+      message.textContent = "Draw, you both picked Scissors!";
     }
   }
+
+  console.log(gameResult());
 }
 
 // start the game
@@ -75,20 +83,24 @@ function gameResult() {
         [User] : ${userScore}  
         [Computer] : ${compScore}`
   );
-
-  if (userScore > compScore) {
-    return "You Won!!!!!";
-  } else if (userScore < compScore) {
-    return "You Lost...";
-  } else {
-    return "That's a draw, try again?";
+  gameOver = false;
+  if (userScore == 5 || compScore == 5) {
+    gameOver = true;
+  }
+  if (gameOver) {
+    if (userScore > compScore) {
+      message.style.color = "red";
+      message.textContent = "The winner is.... YOU!";
+    } else {
+      message.style.color = "red";
+      message.textContent = "The winner is.... COMPUTER...";
+    }
   }
 }
 
 // get User Choice
 function clickBtn(e) {
   let userChoice = this.value;
-  console.log("User pick: ", userChoice);
   playRound(userChoice, getComputerChoice());
 }
 
@@ -96,6 +108,13 @@ const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", clickBtn);
 });
+
+// display result
+const pScore = document.querySelector(".userScore");
+pScore.textContent = userScore;
+const cScore = document.querySelector(".comScore");
+cScore.textContent = compScore;
+const message = document.querySelector(".message");
 
 // const playerSelection = getUserChoice();
 // const computerSelection = getComputerChoice();

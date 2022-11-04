@@ -56,6 +56,7 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
+// start the game
 function game() {
   for (let i = 0; i < 5; i++) {
     computerSelection = getComputerChoice();
@@ -67,6 +68,7 @@ function game() {
   console.log(gameResult());
 }
 
+// show game result after the game
 function gameResult() {
   console.log(
     `The result is: 

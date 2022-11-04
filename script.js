@@ -10,11 +10,11 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function getUserChoice() {
-  let userChoice = prompt("Pick from Rock, Paper or Scissors!").toLowerCase();
-  console.log("User pick: ", userChoice);
-  return userChoice;
-}
+// function getUserChoice() {
+//   let userChoice = prompt("Pick from Rock, Paper or Scissors!").toLowerCase();
+//   console.log("User pick: ", userChoice);
+//   return userChoice;
+// }
 
 // play a single round of rock paper scissors
 function playRound(playerSelection, computerSelection) {
@@ -85,6 +85,18 @@ function gameResult() {
   }
 }
 
+// get User Choice
+function clickBtn(e) {
+  let userChoice = this.value;
+  console.log("User pick: ", userChoice);
+  playRound(userChoice, getComputerChoice());
+}
+
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+  button.addEventListener("click", clickBtn);
+});
+
 // const playerSelection = getUserChoice();
 // const computerSelection = getComputerChoice();
-game();
+// game();
